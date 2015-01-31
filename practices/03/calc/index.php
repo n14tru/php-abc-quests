@@ -1,24 +1,29 @@
 <?php
-if(isset($_GET['operator'])) {
-	switch ($_GET['operator']) {
+$left = isset($_GET['left']) ? $_GET['left'] : null;
+$operator = isset($_GET['operator']) ? $_GET['operator'] : '+';
+$right = isset($_GET['right']) ? $_GET['right'] : null;
+
+if(!is_null($left) && !is_null($right) ) {
+	switch ($operator) {
 		case '+':
-			$answer = $_GET['left'] + $_GET['right'];
+			$answer = $left + $right;
 			break;
 		case '-':
-			$answer = $_GET['left'] - $_GET['right'];
+			$answer = $left - $right;
 			break;
 		case '*':
-			$answer = $_GET['left'] * $_GET['right'];
+			$answer = $left * $right;
 			break;
 		case '/':
-			$answer = $_GET['left'] / $_GET['right'];
+			$answer = $left / $right;
 			break;
 		default:
-			$answer ='予期せぬエラー！';
+			$result ='予期せぬエラー！';
 			break;
 	}
+	$result = "{$left} {$operator} {$right} = {$answer}";
 } else {
-	$answer = "計算結果なしお";
+	$result = "計算結果なしお";
 }
 ?>
 
@@ -31,17 +36,17 @@ if(isset($_GET['operator'])) {
 
 <body>
 <form action="index.php" method="GET">
-	<input type="text" name="left" value="<?php echo $_GET["left"]?>" required autofocus/>
+	<input type="text" name="left" value="<?php echo $left; ?>" required autofocus/>
 	<select name="operator">
-		<option value="+" <?php if($_GET["operator"] == '+') { echo "selected"; } ?>>+</option>
-		<option value="-" <?php if($_GET["operator"] == '-') { echo "selected"; } ?>>-</option>
-		<option value="*" <?php if($_GET["operator"] == '*') { echo "selected"; } ?>>*</option>
-		<option value="/" <?php if($_GET["operator"] == '/') { echo "selected"; } ?>>/</option>
+		<option value="+" <?php if($operator == '+') { echo 'selected'; } ?>>+</option>
+		<option value="-" <?php if($operator == '-') { echo 'selected'; } ?>>-</option>
+		<option value="*" <?php if($operator == '*') { echo 'selected'; } ?>>*</option>
+		<option value="/" <?php if($operator == '/') { echo 'selected'; } ?>>/</option>
 	</select>
-	<input type="text" name="right" value="<?php echo $_GET["right"]?>" required/>
+	<input type="text" name="right" value="<?php echo $right; ?>" required/>
 	<input type="submit" value="計算する">
 </form>
 
-<p><?php echo $_GET["left"].$_GET["operator"].$_GET["right"]."=".$answer; ?></p>
+<p><?php echo $result; ?></p>
 </body>
 </html>
