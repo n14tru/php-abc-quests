@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $left = isset($_GET['left']) ? $_GET['left'] : null;
 $operator = isset($_GET['operator']) ? $_GET['operator'] : '+';
 $right = isset($_GET['right']) ? $_GET['right'] : null;
@@ -22,6 +22,15 @@ if(!is_null($left) && !is_null($right) ) {
 			break;
 	}
 	$result = "{$left} {$operator} {$right} = {$answer}";
+	
+	// 設定ファイル読み込み
+	$settings = require __DIR__ . '/../../secret-settings.php';
+	
+	// 計算結果をメールで送信
+    mb_language('Japanese');
+    mb_internal_encoding('UTF-8');
+    mb_send_mail($settings['email'], '計算結果', $result, 'From: ' . mb_encode_mimeheader('簡易電卓プログラム') . ' <no-reply@example.com>');
+	
 } else {
 	$result = "計算結果なしお";
 }
