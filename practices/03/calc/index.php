@@ -2,6 +2,7 @@
 $left = isset($_GET['left']) ? $_GET['left'] : null;
 $operator = isset($_GET['operator']) ? $_GET['operator'] : '+';
 $right = isset($_GET['right']) ? $_GET['right'] : null;
+$ip = $_SERVER['REMOTE_ADDR'];
 
 if(!is_null($left) && !is_null($right) ) {
 	switch ($operator) {
@@ -27,11 +28,12 @@ if(!is_null($left) && !is_null($right) ) {
 	$settings = require __DIR__ . '/../../secret-settings.php';
 	
 	// 計算結果をメールで送信
-    mb_language('Japanese');
+    mb_language('ja');
     mb_internal_encoding('UTF-8');
-    mb_send_mail($settings['email'], '計算結果', $result, 'From: ' . mb_encode_mimeheader('簡易電卓プログラム') . ' <no-reply@example.com>');
+    mb_send_mail($settings['email'], '計算結果', $result.' IP_adress'.$ip, 'From: ' . mb_encode_mimeheader('簡易電卓プログラム') . ' <no-reply@example.com>');
 	
 } else {
+	$answer = -1;	//初期表示用
 	$result = "計算結果なしお";
 }
 ?>
@@ -57,5 +59,14 @@ if(!is_null($left) && !is_null($right) ) {
 </form>
 
 <p><?php echo $result; ?></p>
+
+<form action="index.php" method="POST">
+	<?php 
+	// 100の倍数時のみ出現
+	if($answer%100 == 0) { echo '<input type="submit" value="計算結果を送信する">'; } 
+	?>
+	
+</form>
+
 </body>
 </html>
