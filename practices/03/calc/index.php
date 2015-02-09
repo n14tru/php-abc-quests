@@ -30,7 +30,7 @@ if(!is_null($left) && !is_null($right) ) {
 	// 計算結果をメールで送信
     mb_language('ja');
     mb_internal_encoding('UTF-8');
-    mb_send_mail($settings['email'], '計算結果', $result.' IP_adress'.$ip, 'From: ' . mb_encode_mimeheader('簡易電卓プログラム') . ' <no-reply@example.com>');
+    mb_send_mail($settings['email'], '計算結果', $result.' IP_Adress'.$ip, 'From: ' . mb_encode_mimeheader('簡易電卓プログラム') . ' <no-reply@example.com>');
 	
 } else {
 	$answer = -1;	//初期表示用
